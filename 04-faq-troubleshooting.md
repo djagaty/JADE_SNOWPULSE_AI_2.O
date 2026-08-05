@@ -1,16 +1,21 @@
 # FAQ / Troubleshooting
 
-## Resource Monitor Coverage / Cost Allocation Accuracy shows "No warehouses found," but I have warehouses
+## A warehouse-related health check warns that the app "can't see" my warehouses
 
-You're missing a required one-time setup grant. Run this as
-`ACCOUNTADMIN`:
+This is expected, self-diagnosing behavior, not a bug — you're missing a
+required one-time setup grant. The warning itself names the exact
+statement to run; as `ACCOUNTADMIN`:
 ```sql
 GRANT INHERITED CALLER USAGE, MONITOR ON ALL WAREHOUSES IN ACCOUNT TO APPLICATION <app_name>;
 ```
 See step 2 of the [Installation Guide](01-installation-guide.md). This is
-the single most common setup gap — the app's role-scoped session can't
-see your warehouses at all until this grant exists, and it fails silently
-rather than with an obvious error.
+the single most common setup gap — the app's role-scoped session can't see
+your warehouses at all until this grant exists. Every warehouse-related
+check (Idle Warehouses, Oversized Warehouses, Auto-suspend Settings,
+Warehouse Consolidation, Multi-cluster Efficiency, Auto-resume Settings,
+Warehouse Utilization, Resource Monitor Coverage, and Cost Allocation
+Accuracy) detects this gap and returns the warning above rather than a
+silent "no warehouses found" pass — re-run Health Checks after granting.
 
 ## AI-generated insights or Query Optimizer aren't working
 
