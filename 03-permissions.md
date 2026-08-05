@@ -22,8 +22,10 @@ only see what the logged-in user's own role already has access to,
 unless you separately grant it visibility with `GRANT CALLER`. One such
 grant is required for full functionality — see step 2 of the
 [Installation Guide](01-installation-guide.md). Skipping it doesn't cause
-an error; it causes certain checks to silently report "not found" instead
-of real data, so don't skip it.
+an error; the affected health checks detect the gap themselves and return
+a warning naming the exact grant statement needed, rather than silently
+reporting "not found" or a false "pass" — so don't skip it, and if you see
+that warning, it's telling you exactly what to run.
 
 ## What the app does *not* do
 
