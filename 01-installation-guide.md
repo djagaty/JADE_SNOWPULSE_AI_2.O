@@ -23,11 +23,15 @@ Run this once, as `ACCOUNTADMIN`:
 GRANT INHERITED CALLER USAGE, MONITOR ON ALL WAREHOUSES IN ACCOUNT TO APPLICATION <app_name>;
 ```
 
-**This step is required, not optional.** Without it, the Resource Monitor
-Coverage and Cost Allocation Accuracy health checks will silently report a
-false "pass"/"no warehouses found" instead of a visible error — the app's
-identity-scoped session can't see your warehouses at all until this grant
-exists.
+**This step is required, not optional.** Without it, the app's
+identity-scoped session can't see your warehouses at all, which affects
+every warehouse-related health check (Idle Warehouses, Oversized
+Warehouses, Auto-suspend Settings, Warehouse Consolidation, Multi-cluster
+Efficiency, Auto-resume Settings, Warehouse Utilization, Resource Monitor
+Coverage, and Cost Allocation Accuracy). Each of these checks detects the
+gap and returns a warning naming the exact `GRANT INHERITED CALLER`
+statement above — it does not silently report a false "pass" or "no
+warehouses found," so if you see that warning, this is the fix.
 
 ## 3. Allow-list a Cortex model
 
