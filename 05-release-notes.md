@@ -8,6 +8,14 @@
   data refresh directly from the app, without contacting support.
 - Improved noise filtering on RBAC change detection, so only genuinely
   meaningful role changes surface.
+- Fixed an install-time activation issue that could block provisioning of
+  the compute pool and service on a subset of accounts.
+- Corrected three health checks (Duplicate Data Detection, Stage File
+  Cleanup, Time Travel / Fail-safe Storage Costs) that were reading from
+  the wrong internal data source and could under-report on some accounts.
+- Extended the missing-grant self-diagnosis warning described in the
+  [FAQ](04-faq-troubleshooting.md) to all nine warehouse-related health
+  checks, not just two.
 
 ## 1.2
 
